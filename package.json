@@ -4,22 +4,46 @@
   "description": "A tutorial repository to create your first eslint rule",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf lib",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build"
+    "test": "jest",
+    "prepublish": "npm run clean && npm run build"
   },
-  "keywords": [],
+  "files": [
+    "README.md",
+    "package.json",
+    "lib"
+  ],
+  "keywords": ["eslint", "typescript", "example"],
   "author": "Quramy",
   "license": "MIT",
   "devDependencies": {
     "@types/eslint": "^4.16.6",
     "@types/node": "^11.10.4",
     "eslint": "^5.15.0",
-    "ts-node-dev": "^1.0.0-pre.32",
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^23.10.4",
     "typescript": "~3.3.0"
   },
   "dependencies": {},
   "peerDependencies": {
     "eslint": "^4.0.0 || ^5.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(src/.*\\.test)\\.ts$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "\\.d\\.ts$",
+      "lib/.*"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ]
   }
 }
