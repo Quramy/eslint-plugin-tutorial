@@ -5,7 +5,7 @@ const rule: Rule.RuleModule = {
     return {
       Literal: (node) => {
         context.report({
-          message: "にゃーん",
+          message: "😿",
           node,
         });
       },
