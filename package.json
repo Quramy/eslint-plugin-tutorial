@@ -1,8 +1,8 @@
 {
-  "name": "@quramy/your-eslint-rules",
+  "name": "@quramy/eslint-plugin-tutorial",
   "version": "1.0.0",
   "description": "A tutorial repository to create your first eslint rule",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
     "build": "tsc",
