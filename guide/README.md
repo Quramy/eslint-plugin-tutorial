@@ -15,3 +15,4 @@ This is not required but this repository already has complete source codes of th
 
 1. [Your first rule](./10_your_first_rule/README.md)
 1. [Dive into AST](./20_dive_into_ast/README.md)
+1. [Other parsers](./30_other_parsers/README.md)
