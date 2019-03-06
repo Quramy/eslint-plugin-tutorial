@@ -1,6 +1,6 @@
 # Other parsers
 Your team may use some transpilers such as TypeScript to write project source codes.
-In this case ESLint rules you create should be tested using the same transpiler.
+In this case, ESLint rules you create should be tested using the same transpiler.
 
 ## Add other parser
 We'll get be able to treat TypeScript / React JSX  through this chapter.
@@ -16,7 +16,7 @@ const MyComponent = ({ onClick }: Props) => (
 
 So we assume that we want to ban to use `<button />` React component.
 
-Let's get AST node for this.
+First of all, let's know AST structure for this.
 Do you remember?
 That's right, we have https://astexplorer.net
 
@@ -26,7 +26,7 @@ To turn on TypeScript/JSX parsing, switch the parser type to "@eslint-typescript
 
 FYI, ESLint uses esprima as default.
 
-Do you get the query to find `<button />`?
+Can you get the query to find `<button />`?
 Yes, it's `JSXIdentifier[name='button']`.
 
 So our rule is implemented as the following:
@@ -54,7 +54,7 @@ export = rule;
 ```
 
 ## Configure rule tester
-And we need to test the above rule so add parser to our project.
+Next, we need to test the above rule so add parser to our project.
 
 ```sh
 $ npm i @eslint-typescript/parser --dev
@@ -95,8 +95,8 @@ tester.run("no-jsx-button", rule, {
 ```
 
 What value the `parserOptions` accepts is defined by each parser.
-For example, `@eslint-typescript/parser`'s configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
-The `parser` / `parserOptions` values also should exists your team project's `.eslintrc`.
+For example, `@eslint-typescript/parser` 's configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
+The `parser` / `parserOptions` values also should exist at your team project's `.eslintrc`.
 
 If you forget to configure RuleTester's parser, `npm test` outputs parsing errors such as:
 

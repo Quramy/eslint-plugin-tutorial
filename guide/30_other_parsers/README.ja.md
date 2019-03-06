@@ -1,9 +1,9 @@
 # Other parsers
-Your team may use some transpilers such as TypeScript to write project source codes.
-In this case ESLint rules you create should be tested using the same transpiler.
+もしかしたら、あなたのチームではTypeScriptのようなトランスパイラを利用しているかもしれません。
+このような場合、作成したESLintルールは同じトランスパイラでテストされるべきです。
 
-## Add other parser
-We'll get be able to treat TypeScript / React JSX  through this chapter.
+## 別のパーサーを追加する
+この章を通して、 TypeScript / React JSX を扱えるようになりましょう。
 
 ```tsx
 type Props = {
@@ -14,22 +14,22 @@ const MyComponent = ({ onClick }: Props) => (
 );
 ```
 
-So we assume that we want to ban to use `<button />` React component.
+そして、`<button />` というReactコンポーネントを禁止したいと思っている、とします。
 
-Let's get AST node for this.
-Do you remember?
-That's right, we have https://astexplorer.net
+まずはこれに対応するASTの構造を知るところからです。
+覚えていますか？
+そうです、私達には https://astexplorer.net があります。
 
-To turn on TypeScript/JSX parsing, switch the parser type to "@eslint-typescript/parser".
+TypeScript/JSXのパースを有効化するため、パーサー種別を "@eslint-typescript/parser" へ切り替えてください。
 
 ![switch_parser](./switch_parser.png)
 
-FYI, ESLint uses esprima as default.
+ちなみに、ESLintはデフォルトではesprimaというパーサーを使います。
 
-Do you get the query to find `<button />`?
-Yes, it's `JSXIdentifier[name='button']`.
+`<button />` を見つけるクエリがわかりましたか？
+はい、 `JSXIdentifier[name='button']` ですね。
 
-So our rule is implemented as the following:
+ですので、今回のルールは次のような実装となります:
 
 ```ts
 /* src/rules/no-jsx-button.ts */
@@ -53,14 +53,14 @@ const rule: Rule.RuleModule = {
 export = rule;
 ```
 
-## Configure rule tester
-And we need to test the above rule so add parser to our project.
+## rule testerを設定する
+上記のルールをテストするため、このプロジェクトにパーサーを追加します。
 
 ```sh
 $ npm i @eslint-typescript/parser --dev
 ```
 
-And tell parser configuration to ESLint RuleTester.
+そして、ESLintのRuleTesterにパーサー設定をおこないます。
 
 ```ts
 /* src/rules/no-jsx-button.test.ts */
@@ -94,11 +94,11 @@ tester.run("no-jsx-button", rule, {
 });
 ```
 
-What value the `parserOptions` accepts is defined by each parser.
-For example, `@eslint-typescript/parser`'s configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
-The `parser` / `parserOptions` values also should exists your team project's `.eslintrc`.
+どのような `parserOptions` が利用できるかは、各パーサーが決定します。
+たとえば、`@eslint-typescript/parser` の設定可能な値は https://github.com/eslint/typescript-eslint-parser に列挙されています。
+また、 `parser` / `parserOptions` はチームのプロジェクトの .eslintrc ファイルにも存在しているはずです。
 
-If you forget to configure RuleTester's parser, `npm test` outputs parsing errors such as:
+もしも RuleTesterのパーサー設定を忘れてしまった場合、 `npm test` にて次のようなパースエラーが出力されてしまいます。
 
 ```text
 Message:
@@ -112,6 +112,6 @@ Message:
 
 ## Summary
 
-* Test rules with parser same to one the project uses
+* プロジェクトが利用しているのと同じパーサーを使ってルールをテストしましょう
 
-[Previous](../20_dive_into_ast/README.md)
+[Previous](../20_dive_into_ast/README.ja.md)
