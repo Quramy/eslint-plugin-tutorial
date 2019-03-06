@@ -146,9 +146,6 @@ $ npm link @quramy/eslint-plugin-tutorial
 }
 ```
 
-An ESLint plugin package should have "eslint-plugin" prefix. 
-Now, our plugin's package json is named as "@quramy/eslint-plugin-tutorial" so ESLint recognises it as "@quramy/tutorial" using this naming convention.
-
 ESLintプラグインパッケージは "eslint-plugin"というプレフィクスから始める必要があります。
 今回は、プラグインパッケージは "@quramy/eslint-plugin-tutorial" という名前ですから、ESLintはこの命名規約によって "@quramy/tutorial" という名前で認識します。
 
@@ -169,7 +166,6 @@ $ echo "const x = 1;" | npx eslint --stdout
 
 ## Summary
 
-* You implement `Rule.RuleModule` to create a ESLint rule
 * ESLintルールを作成するには、 `Rule.RuleModule` を実装する
 * ESLintプラグインNPMパッケージには "eslint-plugin" プレフィクスが必要である
 

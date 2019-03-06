@@ -188,10 +188,6 @@ export = rule;
 最後に、もう一度 `npm test` を実行してください。今度は成功するはずです :sunglasses:
 
 ## 付録: esqueryの"field"記法
-Did you notice that we used `Identifier.property[name='apply']` rather than `Identifier[name='apply']` ?
-The part `.property` is called "field" in esquery syntax.
-`Identifier.property` means "Identifier node which is located as `property` field at the parent node".
-
 ところで、 `Identifier[name='apply']` ではなく、 `Identifier.property[name='apply']` というクエリを使っていたことに気づきましたか？
 `.property` という部分は「フィールド」というesqueryの文法です。
 `Identifier.property` は「親要素における `property` フィールドとして位置している Identifierノード」を意味しています。
