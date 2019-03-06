@@ -1,23 +1,22 @@
 # Dive into AST
 
-We already learned how to write ESLint rule module.
-In this chapter, let's learn the relation ESLint rules and AST(Abstract Syntax Tree) analysis.
-In other words, we'll learn how to find the part you want to ban from the source code!
+私達はすでにESLintルールモジュールの書き方を学びました。
+この章では、ESLintとAST（抽象構文木）解析の関係を学びましょう。
+禁止したいコードのパーツを見つける方法を学ぶ、と言い換えてもよいでしょう！
 
-## Subject
-
-The goal of this chapter is creating a rule which finds a part of source code calling `apply` of some functions.
-For example:
+## お題
+本章のゴールは、 関数の `apply` を呼び出しているソースコードを見つけるルールの作成です。
+例えば:
 
 ```js
 const fn = (x) => console.log(x);
 fn.apply(this, ['hoge']); // We want to ban it!
 ```
 
-Let's adopt the TDD approach.
+TDDの手法を使ってみましょう。
 
-First, we write a test for this rule.
-Put a new test file as `src/rules/no-function-apply.test.ts` and edit the following:
+まず、このルールのテストコードを書きます。
+`src/rules/no-function-apply.test.ts` という名前で新しいテストファイルを作成し、次のように編集してください:
 
 ```ts
 import { RuleTester } from "eslint";
@@ -39,7 +38,7 @@ tester.run("no-function-apply", rule, {
 });
 ```
 
-And create a rule module corresponding it.
+対応するルールモジュールも作成します。
 
 ```ts
 /* src/rules/no-function-apply.ts */
@@ -57,32 +56,34 @@ const rule: Rule.RuleModule = {
 export = rule;
 ```
 
-The above rule is still empty and says nothing when given invalid source codes so `npm test` will fail.
+上記のルールはまだ空であり、どのようなコードが与えられても何も起きません。
+したがって、 `npm test` は必ず失敗します。
 
-## Visualize AST
+## ASTの可視化
 
-Before coding the rule, think about the pattern of the source code we want to find and ban.
+ルールのコーディングをおこなう前に、私達が探し出して禁止したいソースコードのパターンについて考えてみてください。
 
-A JavaScript program source code is recognized as AST in ESLint world.
-Therefore "the pattern of source code" can be paraphrased as "the pattern of AST".
+JavaScriptプログラムコードはESLintの世界ではASTとして認識されています。
+ですので、「ソースコードのパターン」は「ASTのパターン」と言い換えられます。
 
-So let's demystify the shape of AST for `fn.apply(this, ['hoge'])`, which is an invalid code example for the rule.
+そこで、今回のルールの禁止コードである `fn.apply(this, ['hoge'])`について、ASTの形を明らかにしていきましょう。
 
-The following figure is a visualization of the corresponding AST.
+次の図は対応するASTを可視化したものです。
 
 ![ast_diagram](./ast_diagram.png)
 
-AST is tree structural data representation.
-You can see and inspect AST of your source code using https://astexplorer.net .
+ASTは木構造のデータ表現です。
+ソースコードのAST検証には https://astexplorer.net を使うことができます。
 
 ![astexplorer](./astexplorer.png)
 
 https://astexplorer.net/#/gist/76acd406762b142f796a290efaba423e/f721eb98505736ec48892ab556517e30d2a24066
 
-## AST of ESLint
+## ESLintにおけるAST
 
-A parser(e.g. acorn, babylon, typescript-eslint-parser, etc...) in ESLint parses JavaScript source program to a syntax tree and an element of this tree is called "Node".
-Node is defined as the following interface:
+ESLintのパーサー（例: acorn, esprima, babylon, typescript-eslint-parserなど）はJavaScriptプログラムを構文木へパースします。
+構文木の要素は「ノード」と呼ばれます。
+ノードは次のインターフェイスで定義されます。
 
 ```ts
 interface BaseNodeWithoutComments {
@@ -95,13 +96,12 @@ interface BaseNodeWithoutComments {
 }
 ```
 
-As mentioned above, we've got an AST object for `fn.apply(this, ['hoge'])` via AST explorer and found this tree has an "ExpressionStatement" object.
-This object is also one type of node.
-And the node's `type` is `"ExpressionStatement"`.
+先述のように、私達は `fn.apply(this, ['hoge'])` のASTオブジェクトをAST explorerによって知っており、この構文木が "ExpressionStatement" というオブジェクトを持っていることを見てきました。
+そして、このノードの `type` は `"ExpressionStatement"` という文字列値となります。
 
-Well, let's return to the rules of ESLint.
+さて、ESLintルールに話を戻しましょう。
 
-In the previous chapter, we wrote a simple rule such as:
+前章にて、次のようなシンプルなルールを書きました:
 
 ```ts
 const rule: Rule.RuleModule = {
@@ -115,53 +115,53 @@ const rule: Rule.RuleModule = {
 };
 ```
 
-The `create` function returns an object whose key name is `Literal`.
-Where does the key "Literal" come from?
-It's type name of literal AST node and ESLint calls the handler function in response to this name.
+`create` 関数は `Literal` という名前をキーに持つオブジェクトを返却しています。
+"Literal" というキーはどこから来たのでしょう？
+これはリテラルノードのタイプ名であり、ESLintはこの名前に反応してハンドラ関数を呼ぶのです。
 
-We can use more complex keys called "Selector" in the object.
-Selector is very similar to CSS query in HTML.
+「セレクタ」と呼ばれるより複雑なキーをこのオブジェクトの中で利用可能です。
+セレクタはHTMLにおけるCSSクエリにとても似ています。
 
-For example, the following is a selector to find a literal node in a function calling expression.
+例えば、次のセレクタは関数呼び出しの中のリテラルノードを見つけます。
 
 ```text
 "CallExpression Literal"
 ```
 
-This is an example of descendant query.
-The selector notation is almost the same as the CSS query notation.
-See https://github.com/estools/esquery if you want other query syntax.
+これは子孫クエリの例です。
+セレクタ記法は、ほぼCSSクエリと同様の記法です。
+他にどのようなクエリ記法があるかを知りたい場合は、 https://github.com/estools/esquery を見てください。
 
-## Build selector
-So, let's build a selector query to find calling apply functions such as `fn.apply(this, ['hoge'])`.
+## セレクタの作成
+それでは、 `fn.apply(this, ['hoge'])` のような、apply関数の呼び出しを見つけるセレクタクエリを作成しましょう。
 
-We use esquery demo app to do that.
+これにはesqueryのデモアプリがとても便利です。
 
-* Open http://estools.github.io/esquery/
-* Type `fn.apply(this, ['hoge'])` at the top text area
-* Type `CallExpression` to the text input
+* http://estools.github.io/esquery/ を開く
+* 一番上のテキストエリアに `fn.apply(this, ['hoge'])` と入力
+* つづいてテキスト入力欄に `CallExpression` と入力
 
 ![esquery](./esquery.png)
 
-This tool tell us whether the input query hits the input source code AST.
+このツールは入力したクエリが入力のソースコードのASTにヒットするかどうかを教えてくれます。
 
-Now we want to find calling `.apply` and this can be factored as the following:
+いま、私達は `.apply` の呼び出しを探したいと考えており、これは以下のように分解できます:
 
-* CallExpression node
-* MemberExpression node
-* Identifier node whose name "apply"
+* CallExpressionノード
+* MemberExpressionノード
+* "apply" という名前を持つIdentifierノード
 
-And already we've know the AST structure of `fn.apply(this, ['hoge'])` by the AST explorer result.
-Think about which query match using them.
+また、私達はAST explorerの結果によって `fn.apply(this, ['hoge'])` のAST構造をすでに知っています。
+これらを使って、どのようなクエリがマッチするか考えてみてください。
 
-Do you reach the answer?
-The following query should hit.
+答えがわかりましたか？
+次のクエリがヒットするでしょう。
 
 ```
 CallExpression > MemberExpression > Identifier.property[name='apply']
 ```
 
-Let's complete our "no-function-apply" rule.
+"no-function-apply" ルールを完成させましょう。
 
 ```ts
 /* src/rules/no-function-apply.ts */
@@ -185,19 +185,24 @@ const rule: Rule.RuleModule = {
 export = rule;
 ```
 
-Finally, run `npm test` once again. It should exit successfully :sunglasses:
+最後に、もう一度 `npm test` を実行してください。今度は成功するはずです :sunglasses:
 
-## Appendix: "field" syntax of esquery
+## 付録: esqueryの"field"記法
 Did you notice that we used `Identifier.property[name='apply']` rather than `Identifier[name='apply']` ?
 The part `.property` is called "field" in esquery syntax.
 `Identifier.property` means "Identifier node which is located as `property` field at the parent node".
 
-Why do we use this syntax ?
-Does not `Identifier[name='apply']` satisfy for our rule ?
+ところで、 `Identifier[name='apply']` ではなく、 `Identifier.property[name='apply']` というクエリを使っていたことに気づきましたか？
+`.property` という部分は「フィールド」というesqueryの文法です。
+`Identifier.property` は「親要素における `property` フィールドとして位置している Identifierノード」を意味しています。
 
-No it doesn't.
+なぜこの文法を使うのでしょう？
+`Identifier[name='apply']` では不十分なのでしょうか？
 
-`fn.apply` is parsed to a MemberExpression node and this node 2 child nodes and both nodes have the same type "Identifier".
+答えはyesです。
+
+`fn.apply` は MemberExpressionノードにパースされます。
+このノードは2つの子ノードを持ち、この子ノードは両方ともに同じ "Identifier" タイプです。
 
 ```js
 {
@@ -213,15 +218,15 @@ No it doesn't.
 }
 ```
 
-So our rule reports an error for valid code `apply.hoge()` if we use `Identifier[name='apply']`.
+したがって、もし `Identifier[name='apply']` を使ってしまうと、正しいコードである `apply.hoge()` でもエラーが出力されてしまいます。
 
-We can pick up only the later Identifier node using `Identifier.property` selector.
+`Identifier.property` セレクタによって、2番目のIdentifierノードをピックアップできたのです。
 
 ## Summary
 
-* We can use AST selector as object keys in ESlint rule
-* We can inspect AST via https://astexplorer.net
-* We can check selector queries via http://estools.github.io/esquery
+* ESlintルールにおけるオブジェクトキーにはASTセレクタが利用可能
+* https://astexplorer.net でASTの検証が可能
+* http://estools.github.io/esquery でセレクタのチェックが可能
 
-[Previous](../10_your_first_rule/README.md)
-[Next](../30_other_parsers/README.md)
+[Previous](../10_your_first_rule/README.ja.md)
+[Next](../30_other_parsers/README.ja.md)
