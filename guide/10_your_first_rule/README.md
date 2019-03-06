@@ -1,4 +1,5 @@
-# First your rule
+# Your first rule
+In this chapter, let's learn to how create ESLint plugin.
 
 ## Create a rule module
 First of all, put a new file as `src/rules/no-literal.ts` and edit it as the following:
@@ -160,3 +161,9 @@ Can you see the following ?
 ✖ 1 problem (1 error, 0 warnings)
 ```
 
+## Summary
+
+* You implement `Rule.RuleModule` to create a ESLint rule
+* ESLint plugin NPM package should have "eslint-plugin" prefix
+
+[Next](../20_dive_into_ast/README.md)
