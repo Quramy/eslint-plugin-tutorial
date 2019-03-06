@@ -62,7 +62,7 @@ tester.run("no-reteral", rule, {
 And run this test code via:
 
 ```sh
-$ yarn test
+$ npm test
 ```
 
 Can you see the following console output?
@@ -89,9 +89,9 @@ The test code tests 2 assertions:
 ## Create plugin
 So, let's prepare to publish our rule as an ESLint plugin.
 
-ESLint plugin needs index file which tells the name of the rule module.
+A plugin needs index file which tells the name of the rule module to ESLint
 
-Put src/index.ts and edit as the following:
+Put `src/index.ts` and edit as the following:
 
 ```ts
 import noLiteral from "./rules/no-literal";
@@ -144,7 +144,7 @@ Finally, put .eslintrc and configure to use our plugin.
 ```
 
 An ESLint plugin package should have "eslint-plugin" prefix. 
-Now, our plugin's package json is named as "@quramy/eslint-plugin-tutorial" so ESLint recognises it as "@quramy/tutorial" using this naming convention.
+Now, our plugin's package is named as "@quramy/eslint-plugin-tutorial" so ESLint recognises it as "@quramy/tutorial" using this naming convention.
 
 Ok come on, run it!
 

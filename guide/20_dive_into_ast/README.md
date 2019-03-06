@@ -5,7 +5,6 @@ In this chapter, let's learn the relation ESLint rules and AST(Abstract Syntax T
 In other words, we'll learn how to find the part you want to ban from the source code!
 
 ## Subject
-
 The goal of this chapter is creating a rule which finds a part of source code calling `apply` of some functions.
 For example:
 
@@ -57,7 +56,7 @@ const rule: Rule.RuleModule = {
 export = rule;
 ```
 
-The above rule is still empty and says nothing when given invalid source codes so `npm test` will fail.
+The above rule is still empty and says nothing when given invalid source codes so `npm test` must fail.
 
 ## Visualize AST
 
@@ -81,7 +80,7 @@ https://astexplorer.net/#/gist/76acd406762b142f796a290efaba423e/f721eb98505736ec
 
 ## AST of ESLint
 
-A parser(e.g. acorn, babylon, typescript-eslint-parser, etc...) in ESLint parses JavaScript source program to a syntax tree and an element of this tree is called "Node".
+A parser(e.g. acorn, esprima, babylon, typescript-eslint-parser, etc...) in ESLint parses JavaScript source program to a syntax tree and an element of this tree is called "Node".
 Node is defined as the following interface:
 
 ```ts
@@ -97,7 +96,7 @@ interface BaseNodeWithoutComments {
 
 As mentioned above, we've got an AST object for `fn.apply(this, ['hoge'])` via AST explorer and found this tree has an "ExpressionStatement" object.
 This object is also one type of node.
-And the node's `type` is `"ExpressionStatement"`.
+And the node's `type` is the string value `"ExpressionStatement"`.
 
 Well, let's return to the rules of ESLint.
 
@@ -135,11 +134,11 @@ See https://github.com/estools/esquery if you want other query syntax.
 ## Build selector
 So, let's build a selector query to find calling apply functions such as `fn.apply(this, ['hoge'])`.
 
-We use esquery demo app to do that.
+esquery demo app is very useful to do that.
 
 * Open http://estools.github.io/esquery/
 * Type `fn.apply(this, ['hoge'])` at the top text area
-* Type `CallExpression` to the text input
+* Type `CallExpression` to the next text input
 
 ![esquery](./esquery.png)
 
@@ -152,10 +151,10 @@ Now we want to find calling `.apply` and this can be factored as the following:
 * Identifier node whose name "apply"
 
 And already we've know the AST structure of `fn.apply(this, ['hoge'])` by the AST explorer result.
-Think about which query match using them.
+Think about which query matches using them.
 
 Do you reach the answer?
-The following query should hit.
+The following query will hit.
 
 ```
 CallExpression > MemberExpression > Identifier.property[name='apply']
@@ -215,7 +214,7 @@ No it doesn't.
 
 So our rule reports an error for valid code `apply.hoge()` if we use `Identifier[name='apply']`.
 
-We can pick up only the later Identifier node using `Identifier.property` selector.
+We can pick up only the second Identifier node using `Identifier.property` selector.
 
 ## Summary
 
