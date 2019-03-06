@@ -194,3 +194,4 @@ Finally, run `npm test` once again. It should exit successfully :sunglasses:
 * We can check selector queries via http://estools.github.io/esquery
 
 [Previous](../10_your_first_rule/README.md)
+[Next](../30_other_parsers/README.md)
