@@ -19,6 +19,10 @@ tester.run("no-function-apply", rule, {
     {
       code: `fn.apply(this, ['hoge'])`,
       errors: [{ message: "Don't use 'apply'" }],
-    }
+    },
+    {
+      code: `foo.bar.apply(this, ['hoge'])`,
+      errors: [{ message: "Don't use 'apply'" }],
+    },
   ],
 });

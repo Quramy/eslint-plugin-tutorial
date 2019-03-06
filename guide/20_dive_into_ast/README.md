@@ -187,6 +187,36 @@ export = rule;
 
 Finally, run `npm test` once again. It should exit successfully :sunglasses:
 
+## Appendix: "field" syntax of esquery
+Did you notice that we used `Identifier.property[name='apply']` rather than `Identifier[name='apply']` ?
+The part `.property` is called "field" in esquery syntax.
+`Identifier.property` means "Identifier node which is located as `property` field at the parent node".
+
+Why do we use this syntax ?
+Does not `Identifier[name='apply']` satisfy for our rule ?
+
+No it doesn't.
+
+`fn.apply` is parsed to a MemberExpression node and this node 2 child nodes and both nodes have the same type "Identifier".
+
+```js
+{
+  type: "MemberExpression",
+  object: {
+    type: "Identifier",
+    name: "fn"
+  },
+  property: {
+    type: "Identifier",
+    name: "apply"
+  }
+}
+```
+
+So our rule reports an error for valid code `apply.hoge()` if we use `Identifier[name='apply']`.
+
+We can pick up only the later Identifier node using `Identifier.property` selector.
+
 ## Summary
 
 * We can use AST selector as object keys in ESlint rule
