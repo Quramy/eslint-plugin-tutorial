@@ -80,15 +80,15 @@ const tester = new RuleTester({
 tester.run("no-jsx-button", rule, {
   valid: [
     {
-      filename: "valid.tsx", // filename is should set to tell parser this code is TSX
-      code: `(props: Props) => <div />`,
+      filename: "valid.tsx", // filename must be set to tell parser this code is tsx
+      code: `(props: props) => <div />`,
     },
   ],
   invalid: [
     {
-      filename: "invalid.tsx", // filename is should set to tell parser this code is TSX
-      code: `(props: Props) => <button />`,
-      errors: [{ message: "Don't use <button>" }],
+      filename: "invalid.tsx", // filename must be set to tell parser this code is tsx
+      code: `(props: props) => <button />`,
+      errors: [{ message: "don't use <button>" }],
     }
   ],
 });
