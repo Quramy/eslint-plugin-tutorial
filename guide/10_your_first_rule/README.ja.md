@@ -91,7 +91,6 @@ The test code tests 2 assertions:
 ## Create plugin
 それでは、ルールをESLintプラグインとして配布する準備をしましょう。
 
-ESLint plugin needs index file which tells the name of the rule module.
 プラグインはルールモジュールの名前をESLintに伝えるためのindexファイルを必要とします。
 
 `src/index.ts` を作成して次のように編集してください:
