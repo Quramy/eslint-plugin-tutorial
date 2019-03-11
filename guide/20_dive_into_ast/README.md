@@ -1,6 +1,6 @@
 # Dive into AST
 
-We already learned how to write ESLint rule module.
+We already learned how to write ESLint rule modules.
 In this chapter, let's learn the relation ESLint rules and AST(Abstract Syntax Tree) analysis.
 In other words, we'll learn how to find the part you want to ban from the source code!
 
@@ -13,7 +13,7 @@ const fn = (x) => console.log(x);
 fn.apply(this, ['hoge']); // We want to ban it!
 ```
 
-Let's adopt the TDD approach.
+For now, let's adopt the TDD approach.
 
 First, we write a test for this rule.
 Put a new test file as `src/rules/no-function-apply.test.ts` and edit the following:
@@ -80,7 +80,7 @@ https://astexplorer.net/#/gist/76acd406762b142f796a290efaba423e/f721eb98505736ec
 
 ## AST of ESLint
 
-A parser(e.g. acorn, esprima, babylon, typescript-eslint-parser, etc...) in ESLint parses JavaScript source program to a syntax tree and an element of this tree is called "Node".
+A parser(e.g. acorn, esprima, babylon, typescript-eslint-parser, etc...) in ESLint parses JavaScript source program to a syntax tree and each element of this tree is called "Node".
 Node is defined as the following interface:
 
 ```ts
@@ -142,7 +142,7 @@ esquery demo app is very useful to do that.
 
 ![esquery](./esquery.png)
 
-This tool tell us whether the input query hits the input source code AST.
+This tool tells us whether the input query hits the input source code AST.
 
 Now we want to find calling `.apply` and this can be factored as the following:
 
