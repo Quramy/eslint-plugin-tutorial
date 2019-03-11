@@ -28,10 +28,10 @@ Congrats! This is your first ESLint rule!
 This is a very silly rule, which says crying cat emoji when it finds some literals(e.g. `1`, `'hoge'`, ...).
 However, it tells us various things.
 
-* ESLint rule should implements `RuleModule` interface
+* ESLint rule should implement `RuleModule` interface
   * It should have `create` function which has an argument, `context`
 * `create` method should return an object
-  * This object's keys represents AST node type which we are interested (We learn the relation between AST node type and the keys later :smile:)
+  * This object's keys represents AST node type which we are interested in (We learn the relation between AST node type and the keys later :smile:)
   * It's value is a function and an error message is thrown in this function
 
 ## Test the rule
@@ -81,7 +81,7 @@ Snapshots:   0 total
 Time:        1.506s, estimated 2s
 ```
 
-The test code tests 2 assertions:
+This code tests 2 assertions:
 
 1. If given a valid source code, your rule says nothing
 1. If given an invalid source code, your rules reports an error message(:crying_cat_face:)
@@ -89,7 +89,7 @@ The test code tests 2 assertions:
 ## Create plugin
 So, let's prepare to publish our rule as an ESLint plugin.
 
-A plugin needs index file which tells the name of the rule module to ESLint
+A plugin needs an index file which tells the name of the rule module to ESLint
 
 Put `src/index.ts` and edit as the following:
 
