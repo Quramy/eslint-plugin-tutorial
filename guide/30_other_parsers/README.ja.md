@@ -73,20 +73,20 @@ import rule from "./no-jsx-button";
 const tester = new RuleTester({
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    jsx: true,
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 });
 
 tester.run("no-jsx-button", rule, {
   valid: [
     {
-      filename: "valid.tsx", // filename must be set to tell parser this code is tsx
       code: `(props: props) => <div />`,
     },
   ],
   invalid: [
     {
-      filename: "invalid.tsx", // filename must be set to tell parser this code is tsx
       code: `(props: props) => <button />`,
       errors: [{ message: "don't use <button>" }],
     }
@@ -95,7 +95,7 @@ tester.run("no-jsx-button", rule, {
 ```
 
 どのような `parserOptions` が利用できるかは、各パーサーが決定します。
-たとえば、`@eslint-typescript/parser` の設定可能な値は https://github.com/eslint/typescript-eslint-parser に列挙されています。
+たとえば、`@eslint-typescript/parser` の設定可能な値は [@typescript-eslint/parser configuration](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration) に列挙されています。
 また、 `parser` / `parserOptions` はチームのプロジェクトの .eslintrc ファイルにも存在しているはずです。
 
 もしも RuleTesterのパーサー設定を忘れてしまった場合、 `npm test` にて次のようなパースエラーが出力されてしまいます。
@@ -105,9 +105,9 @@ Message:
   Should have no errors but had 1: [ { ruleId: null,
     fatal: true,
     severity: 2,
-    message: 'Parsing error: Unexpected token :',
+    message: "Parsing error: '>' expected.",
     line: 1,
-    column: 7 } ]
+    column: 23 } ]
 ```
 
 ## Summary
