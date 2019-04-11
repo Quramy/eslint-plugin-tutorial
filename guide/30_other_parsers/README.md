@@ -20,7 +20,7 @@ First of all, let's know AST structure for this.
 Do you remember?
 That's right, we have https://astexplorer.net
 
-To turn on TypeScript/JSX parsing, switch the parser type to "@eslint-typescript/parser".
+To turn on TypeScript/JSX parsing, switch the parser type to "@typescript-eslint/parser".
 
 ![switch_parser](./switch_parser.png)
 
@@ -57,7 +57,7 @@ export = rule;
 Next, we need to test the above rule so add parser to our project.
 
 ```sh
-$ npm i @eslint-typescript/parser --dev
+$ npm i @typescript-eslint/parser --dev
 ```
 
 And tell parser configuration to ESLint RuleTester.
@@ -95,7 +95,7 @@ tester.run("no-jsx-button", rule, {
 ```
 
 What value the `parserOptions` accepts is defined by each parser.
-For example, `@eslint-typescript/parser` 's configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
+For example, `@typescript-eslint/parser` 's configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
 The `parser` / `parserOptions` values also should exist at your team project's `.eslintrc`.
 
 If you forget to configure RuleTester's parser, `npm test` outputs parsing errors such as:
