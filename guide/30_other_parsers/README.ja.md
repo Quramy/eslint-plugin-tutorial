@@ -20,7 +20,7 @@ const MyComponent = ({ onClick }: Props) => (
 覚えていますか？
 そうです、私達には https://astexplorer.net があります。
 
-TypeScript/JSXのパースを有効化するため、パーサー種別を "@eslint-typescript/parser" へ切り替えてください。
+TypeScript/JSXのパースを有効化するため、パーサー種別を "@typescript-eslint/parser" へ切り替えてください。
 
 ![switch_parser](./switch_parser.png)
 
@@ -57,7 +57,7 @@ export = rule;
 上記のルールをテストするため、このプロジェクトにパーサーを追加します。
 
 ```sh
-$ npm i @eslint-typescript/parser --dev
+$ npm i @typescript-eslint/parser --dev
 ```
 
 そして、ESLintのRuleTesterにパーサー設定をおこないます。
@@ -95,7 +95,7 @@ tester.run("no-jsx-button", rule, {
 ```
 
 どのような `parserOptions` が利用できるかは、各パーサーが決定します。
-たとえば、`@eslint-typescript/parser` の設定可能な値は [@typescript-eslint/parser configuration](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration) に列挙されています。
+たとえば、`@typescript-eslint/parser` の設定可能な値は [@typescript-eslint/parser configuration](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration) に列挙されています。
 また、 `parser` / `parserOptions` はチームのプロジェクトの .eslintrc ファイルにも存在しているはずです。
 
 もしも RuleTesterのパーサー設定を忘れてしまった場合、 `npm test` にて次のようなパースエラーが出力されてしまいます。
