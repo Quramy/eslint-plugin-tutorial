@@ -149,7 +149,7 @@ Now, our plugin's package is named as "@quramy/eslint-plugin-tutorial" so ESLint
 Ok come on, run it!
 
 ```sh
-$ echo "const x = 1;" | npx eslint --stdout
+$ echo "const x = 1;" | npx eslint --stdin
 ```
 
 Can you see the following ?
