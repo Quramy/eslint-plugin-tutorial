@@ -20,7 +20,7 @@ First of all, let's know AST structure for this.
 Do you remember?
 That's right, we have https://astexplorer.net
 
-To turn on TypeScript/JSX parsing, switch the parser type to "@eslint-typescript/parser".
+To turn on TypeScript/JSX parsing, switch the parser type to "@typescript-eslint/parser".
 
 ![switch_parser](./switch_parser.png)
 
@@ -57,7 +57,7 @@ export = rule;
 Next, we need to test the above rule so add parser to our project.
 
 ```sh
-$ npm i @eslint-typescript/parser --dev
+$ npm i @typescript-eslint/parser --dev
 ```
 
 And tell parser configuration to ESLint RuleTester.
@@ -73,20 +73,20 @@ import rule from "./no-jsx-button";
 const tester = new RuleTester({
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    jsx: true,
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 });
 
 tester.run("no-jsx-button", rule, {
   valid: [
     {
-      filename: "valid.tsx", // filename must be set to tell parser this code is tsx
       code: `(props: Props) => <div />`,
     },
   ],
   invalid: [
     {
-      filename: "invalid.tsx", // filename must be set to tell parser this code is tsx
       code: `(props: Props) => <button />`,
       errors: [{ message: "Don't use <button>" }],
     }
@@ -95,8 +95,7 @@ tester.run("no-jsx-button", rule, {
 ```
 
 What value the `parserOptions` accepts is defined by each parser.
-For example, `@eslint-typescript/parser` 's configurable values are listed up in https://github.com/eslint/typescript-eslint-parser .
-The `parser` / `parserOptions` values also should exist at your team project's `.eslintrc`.
+For example, `@typescript-eslint/parser` 's configurable values are listed up in [@typescript-eslint/parser configuration](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration). The `parser` / `parserOptions` values also should exist at your team project's `.eslintrc`.
 
 If you forget to configure RuleTester's parser, `npm test` outputs parsing errors such as:
 
@@ -105,9 +104,9 @@ Message:
   Should have no errors but had 1: [ { ruleId: null,
     fatal: true,
     severity: 2,
-    message: 'Parsing error: Unexpected token :',
+    message: "Parsing error: '>' expected.",
     line: 1,
-    column: 7 } ]
+    column: 23 } ]
 ```
 
 ## Summary
