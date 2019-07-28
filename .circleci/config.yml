@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:12
+      - image: node:10
     working_directory: ~/repo
 
     steps:
