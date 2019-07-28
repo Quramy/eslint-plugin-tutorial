@@ -24,13 +24,13 @@
   "license": "MIT",
   "devDependencies": {
     "@types/eslint": "^4.16.6",
-    "@types/node": "^11.10.4",
+    "@types/node": "^12.6.8",
     "@typescript-eslint/parser": "^1.4.2",
-    "eslint": "^5.15.0",
-    "jest": "^23.6.0",
+    "eslint": "^6.1.0",
+    "jest": "^24.8.0",
     "rimraf": "^2.6.3",
-    "ts-jest": "^23.10.4",
-    "typescript": "~3.4.0"
+    "ts-jest": "^24.0.2",
+    "typescript": "~3.5.0"
   },
   "dependencies": {},
   "peerDependencies": {
