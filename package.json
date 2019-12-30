@@ -4,7 +4,7 @@
   "description": "A tutorial repository to create your first eslint rule",
   "main": "lib/index.js",
   "scripts": {
-    "start-tutorial": "rimraf \"src/rules/**/*\" && rimraf src/index.ts",
+    "start-tutorial": "rimraf \"src/rules/**/*\" && rimraf src/index.ts && npm un @typescript-eslint/parser",
     "clean": "rimraf lib",
     "build": "tsc",
     "test": "jest",
