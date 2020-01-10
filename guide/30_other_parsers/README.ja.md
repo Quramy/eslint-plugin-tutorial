@@ -88,7 +88,7 @@ tester.run("no-jsx-button", rule, {
   invalid: [
     {
       code: `(props: props) => <button />`,
-      errors: [{ message: "don't use <button>" }],
+      errors: [{ message: "Don't use <button>" }],
     }
   ],
 });
