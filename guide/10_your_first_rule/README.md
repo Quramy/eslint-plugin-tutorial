@@ -46,7 +46,7 @@ import rule from "./no-literal";
 
 const tester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });
 
-tester.run("no-reteral", rule, {
+tester.run("no-literal", rule, {
   valid: [
     { code: `let x` },
   ],
@@ -69,7 +69,7 @@ Can you see the following console output?
 
 ```text
 PASS src/rules/no-literal.test.ts
-  no-reteral
+  no-literal
     valid
       ✓ let x (29ms)
     invalid
