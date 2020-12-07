@@ -16,10 +16,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install
+      - name: Install dependencies
         run: yarn --frozen-lockfile
-        env:
-          CI: true
+      - name: Format check
+        run: yarn format:check
       - name: Unit Testing
         run: yarn test
         env:

@@ -1,30 +1,30 @@
 # Other parsers
-もしかしたら、あなたのチームではTypeScriptのようなトランスパイラを利用しているかもしれません。
-このような場合、作成したESLintルールは同じトランスパイラでテストされるべきです。
+
+もしかしたら、あなたのチームでは TypeScript のようなトランスパイラを利用しているかもしれません。
+このような場合、作成した ESLint ルールは同じトランスパイラでテストされるべきです。
 
 ## 別のパーサーを追加する
+
 この章を通して、 TypeScript / React JSX を扱えるようになりましょう。
 
 ```tsx
 type Props = {
-  onClick: () => void,
+  onClick: () => void;
 };
-const MyComponent = ({ onClick }: Props) => (
-  <button onClick={() => onClick()} />
-);
+const MyComponent = ({ onClick }: Props) => <button onClick={() => onClick()} />;
 ```
 
-そして、`<button />` というReactコンポーネントを禁止したいと思っている、とします。
+そして、`<button />` という React コンポーネントを禁止したいと思っている、とします。
 
-まずはこれに対応するASTの構造を知るところからです。
+まずはこれに対応する AST の構造を知るところからです。
 覚えていますか？
 そうです、私達には https://astexplorer.net があります。
 
-TypeScript/JSXのパースを有効化するため、パーサー種別を "@typescript-eslint/parser" へ切り替えてください。
+TypeScript/JSX のパースを有効化するため、パーサー種別を "@typescript-eslint/parser" へ切り替えてください。
 
 ![switch_parser](./switch_parser.png)
 
-ちなみに、ESLintはデフォルトではesprimaというパーサーを使います。
+ちなみに、ESLint はデフォルトでは esprima というパーサーを使います。
 
 `<button />` を見つけるクエリがわかりましたか？
 はい、 `JSXIdentifier[name='button']` ですね。
@@ -38,7 +38,7 @@ import { Rule } from "eslint";
 import { Node } from "estree";
 
 const rule: Rule.RuleModule = {
-  create: (context) => {
+  create: context => {
     return {
       "JSXIdentifier[name='button']": (node: Node) => {
         context.report({
@@ -53,14 +53,15 @@ const rule: Rule.RuleModule = {
 export = rule;
 ```
 
-## rule testerを設定する
+## rule tester を設定する
+
 上記のルールをテストするため、このプロジェクトにパーサーを追加します。
 
 ```sh
 $ npm i @typescript-eslint/parser --dev
 ```
 
-そして、ESLintのRuleTesterにパーサー設定をおこないます。
+そして、ESLint の RuleTester にパーサー設定をおこないます。
 
 ```ts
 /* src/rules/no-jsx-button.test.ts */
@@ -89,7 +90,7 @@ tester.run("no-jsx-button", rule, {
     {
       code: `(props: props) => <button />`,
       errors: [{ message: "Don't use <button>" }],
-    }
+    },
   ],
 });
 ```
@@ -98,7 +99,7 @@ tester.run("no-jsx-button", rule, {
 たとえば、`@typescript-eslint/parser` の設定可能な値は [@typescript-eslint/parser configuration](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration) に列挙されています。
 また、 `parser` / `parserOptions` はチームのプロジェクトの .eslintrc ファイルにも存在しているはずです。
 
-もしも RuleTesterのパーサー設定を忘れてしまった場合、 `npm test` にて次のようなパースエラーが出力されてしまいます。
+もしも RuleTester のパーサー設定を忘れてしまった場合、 `npm test` にて次のようなパースエラーが出力されてしまいます。
 
 ```text
 Message:
@@ -112,6 +113,6 @@ Message:
 
 ## Summary
 
-* プロジェクトが利用しているのと同じパーサーを使ってルールをテストしましょう
+- プロジェクトが利用しているのと同じパーサーを使ってルールをテストしましょう
 
 [Previous](../20_dive_into_ast/README.ja.md)

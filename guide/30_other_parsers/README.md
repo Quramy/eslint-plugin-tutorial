@@ -1,17 +1,17 @@
 # Other parsers
+
 Your team may use some transpilers such as TypeScript to write project source codes.
 In this case, ESLint rules you create should be tested using the same transpiler.
 
 ## Add other parser
-We'll get be able to treat TypeScript / React JSX  through this chapter.
+
+We'll get be able to treat TypeScript / React JSX through this chapter.
 
 ```tsx
 type Props = {
-  onClick: () => void,
+  onClick: () => void;
 };
-const MyComponent = ({ onClick }: Props) => (
-  <button onClick={() => onClick()} />
-);
+const MyComponent = ({ onClick }: Props) => <button onClick={() => onClick()} />;
 ```
 
 So we assume that we want to ban to use `<button />` React component.
@@ -38,7 +38,7 @@ import { Rule } from "eslint";
 import { Node } from "estree";
 
 const rule: Rule.RuleModule = {
-  create: (context) => {
+  create: context => {
     return {
       "JSXIdentifier[name='button']": (node: Node) => {
         context.report({
@@ -54,6 +54,7 @@ export = rule;
 ```
 
 ## Configure rule tester
+
 Next, we need to test the above rule so add parser to our project.
 
 ```sh
@@ -89,7 +90,7 @@ tester.run("no-jsx-button", rule, {
     {
       code: `(props: Props) => <button />`,
       errors: [{ message: "Don't use <button>" }],
-    }
+    },
   ],
 });
 ```
@@ -111,6 +112,6 @@ Message:
 
 ## Summary
 
-* Test rules with parser same to one the project uses
+- Test rules with parser same to one the project uses
 
 [Previous](../20_dive_into_ast/README.md)

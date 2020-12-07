@@ -21,6 +21,6 @@ tester.run("no-jsx-button", rule, {
       filename: "invalid.tsx", // filename must be set to tell parser this code is tsx
       code: `(props: props) => <button />`,
       errors: [{ message: "Don't use <button>" }],
-    }
+    },
   ],
 });

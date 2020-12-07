@@ -1,16 +1,16 @@
 import { Rule } from "eslint";
 
 const rule: Rule.RuleModule = {
-  create: (context) => {
+  create: context => {
     return {
-      Literal: (node) => {
+      Literal: node => {
         context.report({
           message: "😿",
           node,
         });
       },
     };
-  }
+  },
 };
 
 export = rule;

@@ -2,7 +2,7 @@ import { Rule } from "eslint";
 import { Node } from "estree";
 
 const rule: Rule.RuleModule = {
-  create: (context) => {
+  create: context => {
     return {
       "JSXIdentifier[name='button']": (node: Node) => {
         context.report({

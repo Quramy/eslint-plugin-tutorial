@@ -8,7 +8,7 @@
     "clean": "rimraf lib",
     "prebuild": "rimraf node_modules/@types/eslint/node_modules/@types/estree",
     "build": "tsc",
-    "prettier": "prettier \"*.js\" \"*.md\" \"*.json\" \"*.yml\" \"src/**/*\" \"guide/**/*\"",
+    "prettier": "prettier \"*.{js,json,yml,yaml,md}\" \"src/**/*\" \"guide/**/*\"",
     "format": "yarn prettier --write",
     "format:check": "yarn prettier --check",
     "test": "jest",

@@ -1,23 +1,25 @@
 # Your first rule
+
 In this chapter, let's learn to how create ESLint plugin.
 
 ## Create a rule module
+
 First of all, put a new file as `src/rules/no-literal.ts` and edit it as the following:
 
 ```ts
 import { Rule } from "eslint";
 
 const rule: Rule.RuleModule = {
-  create: (context) => {
+  create: context => {
     return {
-      Literal: (node) => {
+      Literal: node => {
         context.report({
           message: "😿",
           node,
         });
       },
     };
-  }
+  },
 };
 
 export = rule;
@@ -28,13 +30,14 @@ Congrats! This is your first ESLint rule!
 This is a very silly rule, which says crying cat emoji when it finds some literals(e.g. `1`, `'hoge'`, ...).
 However, it tells us various things.
 
-* ESLint rule should implement `RuleModule` interface
-  * It should have `create` function which has an argument, `context`
-* `create` method should return an object
-  * This object's keys represents AST node type which we are interested in (We learn the relation between AST node type and the keys later :smile:)
-  * It's value is a function and an error message is thrown in this function
+- ESLint rule should implement `RuleModule` interface
+  - It should have `create` function which has an argument, `context`
+- `create` method should return an object
+  - This object's keys represents AST node type which we are interested in (We learn the relation between AST node type and the keys later :smile:)
+  - It's value is a function and an error message is thrown in this function
 
 ## Test the rule
+
 Next, let's test that this rule works.
 
 Put another file, `src/rules/no-literal.test.ts` and edit:
@@ -47,14 +50,12 @@ import rule from "./no-literal";
 const tester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });
 
 tester.run("no-literal", rule, {
-  valid: [
-    { code: `let x` },
-  ],
+  valid: [{ code: `let x` }],
   invalid: [
     {
       code: `const x = 1;`,
       errors: [{ message: "😿" }],
-    }
+    },
   ],
 });
 ```
@@ -87,6 +88,7 @@ This code tests 2 assertions:
 1. If given an invalid source code, your rules reports an error message(:crying_cat_face:)
 
 ## Create plugin
+
 So, let's prepare to publish our rule as an ESLint plugin.
 
 A plugin needs an index file which tells the name of the rule module to ESLint
@@ -133,17 +135,17 @@ Finally, put .eslintrc and configure to use our plugin.
 
 ```json
 {
-    "plugins": ["@quramy/tutorial"],
-    "parserOptions": {
-        "ecmaVersion": 2015
-    },
-    "rules": {
-      "@quramy/tutorial/no-literal": 2
-    }
+  "plugins": ["@quramy/tutorial"],
+  "parserOptions": {
+    "ecmaVersion": 2015
+  },
+  "rules": {
+    "@quramy/tutorial/no-literal": 2
+  }
 }
 ```
 
-An ESLint plugin package should have "eslint-plugin" prefix. 
+An ESLint plugin package should have "eslint-plugin" prefix.
 Now, our plugin's package is named as "@quramy/eslint-plugin-tutorial" so ESLint recognises it as "@quramy/tutorial" using this naming convention.
 
 Ok come on, run it!
@@ -163,7 +165,7 @@ Can you see the following ?
 
 ## Summary
 
-* You implement `Rule.RuleModule` to create a ESLint rule
-* ESLint plugin NPM package should have "eslint-plugin" prefix
+- You implement `Rule.RuleModule` to create a ESLint rule
+- ESLint plugin NPM package should have "eslint-plugin" prefix
 
 [Next](../20_dive_into_ast/README.md)
