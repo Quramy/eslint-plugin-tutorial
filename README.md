@@ -25,7 +25,7 @@ This repository includes:
 
 * TypeScript setting
 * Jest
-* CircleCI configuration
+* GitHub actions configuration
 
 ## LICENSE
 MIT
