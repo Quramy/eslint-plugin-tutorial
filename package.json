@@ -34,7 +34,7 @@
     "eslint": "7.29.0",
     "husky": "4.3.8",
     "jest": "27.0.3",
-    "prettier": "2.3.0",
+    "prettier": "2.3.2",
     "pretty-quick": "3.1.1",
     "rimraf": "3.0.2",
     "ts-jest": "27.0.2",
