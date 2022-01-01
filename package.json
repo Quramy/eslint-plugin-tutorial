@@ -30,7 +30,7 @@
     "@types/eslint": "8.2.1",
     "@types/estree": "0.0.50",
     "@types/node": "16.11.17",
-    "@typescript-eslint/parser": "5.4.0",
+    "@typescript-eslint/parser": "5.8.1",
     "eslint": "8.6.0",
     "husky": "4.3.8",
     "jest": "27.4.5",
