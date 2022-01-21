@@ -24,7 +24,7 @@ TypeScript/JSX のパースを有効化するため、パーサー種別を "@ty
 
 ![switch_parser](./switch_parser.png)
 
-ちなみに、ESLint はデフォルトでは esprima というパーサーを使います。
+ちなみに、ESLint はデフォルトでは espree というパーサーを使います。
 
 `<button />` を見つけるクエリがわかりましたか？
 はい、 `JSXIdentifier[name='button']` ですね。
