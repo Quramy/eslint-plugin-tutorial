@@ -24,7 +24,7 @@ To turn on TypeScript/JSX parsing, switch the parser type to "@typescript-eslint
 
 ![switch_parser](./switch_parser.png)
 
-FYI, ESLint uses esprima as default.
+FYI, ESLint uses espree as default.
 
 Can you get the query to find `<button />`?
 Yes, it's `JSXIdentifier[name='button']`.
