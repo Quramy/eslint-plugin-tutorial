@@ -31,7 +31,7 @@
     "@types/estree": "0.0.51",
     "@types/node": "16.11.33",
     "@typescript-eslint/parser": "5.21.0",
-    "eslint": "8.15.0",
+    "eslint": "8.16.0",
     "husky": "8.0.1",
     "jest": "28.1.0",
     "prettier": "2.6.2",
