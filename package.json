@@ -29,7 +29,7 @@
   "devDependencies": {
     "@types/eslint": "8.4.2",
     "@types/estree": "0.0.51",
-    "@types/node": "16.11.41",
+    "@types/node": "16.11.46",
     "@typescript-eslint/parser": "5.26.0",
     "eslint": "8.17.0",
     "husky": "8.0.1",
