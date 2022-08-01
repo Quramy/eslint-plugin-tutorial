@@ -27,11 +27,11 @@
   "author": "Quramy",
   "license": "MIT",
   "devDependencies": {
-    "@types/eslint": "8.4.2",
+    "@types/eslint": "8.4.5",
     "@types/estree": "0.0.51",
     "@types/node": "16.11.46",
     "@typescript-eslint/parser": "5.26.0",
-    "eslint": "8.17.0",
+    "eslint": "8.21.0",
     "husky": "8.0.1",
     "jest": "28.1.0",
     "prettier": "2.7.1",
