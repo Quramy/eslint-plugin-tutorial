@@ -28,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/eslint": "8.4.6",
-    "@types/estree": "1.0.0",
+    "@types/estree": "1.0.3",
     "@types/node": "18.18.4",
     "@typescript-eslint/parser": "5.26.0",
     "eslint": "8.22.0",
